@@ -3,13 +3,24 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueResource from 'vue-resource'
+import './assets/css/pace/pace-theme-minimal.css'
+import './assets/js/pace.min'
+import './assets/js/screenfull'
+import 'jquery/dist/jquery.min.js'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap'
 
-Vue.config.productionTip = false
+Vue.use(VueResource);
+Vue.config.productionTip = false;
+Vue.http.options.emulateJSON = true;
+Vue.http.options.crossOrigin = true;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+  components: {App},
+  template: '<App/>',
+  router: router,
+
+});
