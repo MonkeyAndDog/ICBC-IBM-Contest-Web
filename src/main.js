@@ -10,17 +10,20 @@ import './assets/js/screenfull'
 import 'jquery/dist/jquery.min.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap/dist/fonts/glyphicons-halflings-regular.eot'
+import 'bootstrap/dist/fonts/glyphicons-halflings-regular.svg'
+import 'bootstrap/dist/fonts/glyphicons-halflings-regular.ttf'
+import 'bootstrap/dist/fonts/glyphicons-halflings-regular.woff'
+import 'bootstrap/dist/fonts/glyphicons-halflings-regular.woff2'
 
 Vue.use(VueResource);
 Vue.config.productionTip = false;
 Vue.http.options.emulateJSON = true;
 Vue.http.options.crossOrigin = true;
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   components: {App},
   template: '<App/>',
   router: router,
-
 });

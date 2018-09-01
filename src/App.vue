@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:style="{ fontSize:contentFontSize + 'em' }" v-on:change-model="changeModel">
+  <div id="app" v-bind:style="{ fontSize:contentFontSize + 'em' }">
     <PageHeader></PageHeader>
     <router-view></router-view>
     <PageFooter></PageFooter>
@@ -9,20 +9,34 @@
 <script>
 import PageHeader from "./components/PageHeader";
 import PageFooter from "./components/PageFooter";
-import $ from 'jquery'
-import './assets/js/screenfull'
+import $ from 'jquery';
+import './assets/js/screenfull';
+
 export default {
   name: 'App',
   components: {PageFooter, PageHeader},
-  data: function() {
+  data: function () {
     return {
+      isAccessibilityModel: false,
+      accessibilityModel: '无障碍模式',
       contentFontSize: 1
     }
   },
   methods: {
-    changeModel: function (fontSize) {
-      this.contentFontSize = fontSize;
-      alert(666)
+    fullScreen: function () {
+      screenfull.toggle();
+      this.isAccessibilityModel = !this.isAccessibilityModel;
+      this.changeAccessibilityModel();
+      return this.accessibilityModel;
+    },
+    changeAccessibilityModel: function () {
+      if (this.isAccessibilityModel) {
+        this.accessibilityModel = '一般模式';
+        this.contentFontSize = 3;
+      } else {
+        this.accessibilityModel = '无障碍模式';
+        this.contentFontSize = 1;
+      }
     }
   }
 }

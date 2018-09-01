@@ -34,32 +34,18 @@
 
 <script>
   import '../assets/js/screenfull'
+  import App from '../App';
 
   export default {
     name: "PageHeader",
-    data: function () {
+    data: function() {
       return {
-        isAccessibilityModel: false,
-        accessibilityModel: '无障碍模式',
-        contentFontSize: 1
+        accessibilityModel:'无障碍模式'
       }
     },
     methods: {
       fullScreen: function () {
-        screenfull.toggle();
-        this.isAccessibilityModel = !this.isAccessibilityModel;
-        this.changeAccessibilityModel();
-      },
-      changeAccessibilityModel: function () {
-        if (this.isAccessibilityModel) {
-          this.accessibilityModel = '一般模式';
-          this.contentFontSize = 3;
-          this.$emit('change-model', this.contentFontSize);
-        } else {
-          this.accessibilityModel = '无障碍模式';
-          this.contentFontSize = 1;
-          this.$emit('change-model', this.contentFontSize);
-        }
+        this.accessibilityModel = App.methods.fullScreen();
       }
     }
   }
