@@ -40,8 +40,6 @@ npm run dev
 编译项目：
 npm run build
 ```
-得到.war文件包之后放置于Tomcat的webapps目录下，重启tomcat。然后访问 `http://localhost:8080/ICBC-IBM-Contest-1.0/`
-即可。
 
 ## 完成功能
 - [x] 生成二维码
