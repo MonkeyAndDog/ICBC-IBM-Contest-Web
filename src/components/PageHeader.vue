@@ -24,7 +24,7 @@
             <router-link to="/about">关于</router-link>
           </li>
           <li>
-            <a href="#" v-on:click="fullScreen">{{ accessibilityModel }}</a>
+            <a href="#" v-on:click="changeState">{{ accessibilityModel }}</a>
           </li>
         </ul>
       </div>
@@ -34,18 +34,25 @@
 
 <script>
   import '../assets/js/screenfull'
-  import App from '../App';
 
   export default {
     name: "PageHeader",
-    data: function() {
+    data: function () {
       return {
-        accessibilityModel:'无障碍模式'
+        accessibilityModel: '无障碍模式',
+        isAccessibilityModel: false
       }
     },
     methods: {
-      fullScreen: function () {
-        this.accessibilityModel = App.methods.fullScreen();
+      changeState: function () {
+        if (this.isAccessibilityModel) {
+          this.$store.commit('changeModel', 1);
+          this.accessibilityModel = '一般模式'
+        } else {
+          this.$store.commit('changeModel', 3);
+          this.accessibilityModel = '无障碍模式'
+        }
+        this.isAccessibilityModel = !this.isAccessibilityModel;
       }
     }
   }

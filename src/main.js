@@ -7,23 +7,44 @@ import VueResource from 'vue-resource'
 import './assets/css/pace/pace-theme-minimal.css'
 import './assets/js/pace.min'
 import './assets/js/screenfull'
-import 'jquery/dist/jquery.min.js'
+import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap'
-import 'bootstrap/dist/fonts/glyphicons-halflings-regular.eot'
-import 'bootstrap/dist/fonts/glyphicons-halflings-regular.svg'
-import 'bootstrap/dist/fonts/glyphicons-halflings-regular.ttf'
-import 'bootstrap/dist/fonts/glyphicons-halflings-regular.woff'
-import 'bootstrap/dist/fonts/glyphicons-halflings-regular.woff2'
+import Vuex from 'vuex'
+import './assets/js/screenfull';
 
+Vue.use(Vuex);
 Vue.use(VueResource);
 Vue.config.productionTip = false;
 Vue.http.options.emulateJSON = true;
 Vue.http.options.crossOrigin = true;
 
+const store = new Vuex.Store({
+  state: {
+    contentFontSize: 1
+  },
+  mutations: {
+    changeModel: function (state, size) {
+      state.contentFontSize = size;
+      screenfull.toggle();
+    }
+  },
+  getters: {
+    fontSize: function (state) {
+      return state.contentFontSize;
+    }
+  }
+})
+
 new Vue({
   el: '#app',
   components: {App},
-  template: '<App/>',
+  template: '<App v-bind:model-font-size="modelFontSize" />',
   router: router,
+  store:store,
+  computed: {
+    modelFontSize: function () {
+      return this.$store.getters.fontSize;
+    }
+  }
 });

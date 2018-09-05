@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "element-ui": "^2.4.6",
     "expose-loader": "^0.7.5",
     "jquery": "^3.3.1",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
