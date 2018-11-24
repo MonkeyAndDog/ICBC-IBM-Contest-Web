@@ -6,6 +6,7 @@ import About from '../components/About'
 import Starter from '../components/Starter'
 import EPayPanel from '../components/EPayPanel'
 import TransferPanel from '../components/TransferPanel'
+import Result from '../components/ResultPanel'
 
 Vue.use(Router);
 
@@ -34,6 +35,10 @@ export default new Router({
     {
       path: '/about',
       component: About
+    },
+    {
+      path: '/result/:id',
+      component: Result
     }
   ]
 })

@@ -52,6 +52,7 @@
             if (result.status === "0") {
               that.$store.commit("read_content", "账户开户成功，您的工行联名卡号为：" + result.data);
               that.toggle()
+              that.$router.push("/result/" + result.data);
             } else {
               that.$store.commit("read_content", "账户开户失败");
             }

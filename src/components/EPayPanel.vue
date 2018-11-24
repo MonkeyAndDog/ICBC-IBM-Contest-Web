@@ -81,7 +81,7 @@
           that.submit();
         }
       });
-      this.$store.commit("read_content", "您选择了线上账户服务，按回车开始录入信息");
+      this.$store.commit("read_content", "您选择了线上账户服务，稍后开始录入信息");
       setTimeout(function () {
         $('#first_input').focus();
       }, 5000)
