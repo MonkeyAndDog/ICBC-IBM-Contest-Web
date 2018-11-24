@@ -30,10 +30,15 @@ const store = new Vuex.Store({
     is_reading: false
   },
   mutations: {
+
+    //切换模式，一般模式or无障碍模式
     changeModel: function (state, size) {
       state.contentFontSize = size;
       screenfull.toggle();
     },
+
+    //阅读内容
+    //调用baidu语音合成API
     read_content: function (state, content) {
       if (!state.is_reading) {
         state.is_reading = true;

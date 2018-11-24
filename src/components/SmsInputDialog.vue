@@ -58,10 +58,14 @@
           }
         })
       },
+
+      //获取焦点
       get_focus: function () {
         $('#sms_send_no').focus();
       }
     },
+
+    //初始化，监听回车来进行提交
     mounted: function () {
       var that = this;
       $('#sms_send_no').bind('keyup', function (event) {

@@ -48,6 +48,8 @@
       }
     },
     methods: {
+
+      //提交测试数据
       submit: function () {
         var that = this;
         $.ajax({
