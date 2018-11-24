@@ -53,7 +53,7 @@
         var that = this;
         $.ajax({
           type: "post",
-          url: "http://localhost:8080/ifinance/create/createAccount",
+          url: "http://118.31.62.78:8080/ifinance/create/createAccount",
           data: this.$data.params,
           success: function (result) {
             if (result.status === "0") {
