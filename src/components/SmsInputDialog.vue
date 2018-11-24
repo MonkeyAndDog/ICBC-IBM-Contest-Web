@@ -11,7 +11,6 @@
             <el-input id="sms_input" v-model="params.smsInput" placeholder="短信验证码" disabled></el-input>
             <el-input id="corp_ser_no" v-model="params.corpSerNoOriginal" placeholder="原始交易单号" disabled></el-input>
             <el-input id="sms_send_no" v-model="params.smsSendNo" placeholder="短信编号" autofocus></el-input>
-            <el-button @click="submit">提交</el-button>
           </div>
         </div>
       </div>
@@ -66,7 +65,6 @@
     mounted: function () {
       var that = this;
       $('#sms_send_no').bind('keyup', function (event) {
-        console.log(event.keyCode);
         if (event.keyCode === 13) {
           that.$store.commit("read_content", "您已提交");
           that.submit();

@@ -3,7 +3,7 @@
     <el-row class="section_card" :span="20" :gutter="20" type="flex" justify="center">
       <el-col>
         <router-link to="/epay">
-          <el-card class="section_card">
+          <el-card id="epay" class="section_card" shadow="hover">
             <el-header>
               线上账户服务
             </el-header>
@@ -13,7 +13,7 @@
       </el-col>
       <el-col>
         <router-link to="/transfer">
-          <el-card>
+          <el-card id="icbcepay" shadow="hover">
             <el-header>
               工银e缴费
             </el-header>
@@ -31,7 +31,14 @@
   export default {
     name: "Library",
     mounted: function () {
-      this.$store.commit("read_content", "您可使用的功能有线上账户服务，工银e缴费")
+      var that = this;
+      this.$store.commit("read_content", "您可使用的功能有线上账户服务，工银e缴费");
+      $('#epay').hover(function () {
+        that.$store.commit("read_content", "您现在要选择的是线上账户服务")
+      });
+      $('#icbcepay').hover(function () {
+        that.$store.commit("read_content", "您现在要选择的是工银e缴费")
+      })
     }
   }
 </script>

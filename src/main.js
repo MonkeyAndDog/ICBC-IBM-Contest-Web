@@ -68,7 +68,9 @@ const store = new Vuex.Store({
             alert('timeout')
           }
         });
-        state.is_reading = false;
+        setTimeout(function() {
+          state.is_reading = false;
+        }, 1000)
       }
     }
   },

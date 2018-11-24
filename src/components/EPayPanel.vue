@@ -19,7 +19,6 @@
     <el-input class="input_space" v-model="params.custName" placeholder="户名" @focus="read_input('户名输入')"></el-input>
     <el-input class="input_space" v-model="params.mobileNo" placeholder="手机号" @focus="read_input('手机号输入')"></el-input>
     <el-input @focus="read_input('确认提交')" id="subBtn"></el-input>
-    <el-button @click="submit" @focus="read_input('确认提交')">提交</el-button>
   </div>
 </template>
 
@@ -57,7 +56,6 @@
           data: this.$data.params,
           success: function (result) {
             if (result.status === "0") {
-              console.log(result);
               that.$store.commit("read_content", "账户受理成功，您的短信编号是：" + result.data + "，请输入您的短信验证码， 按回车提交")
               that.$refs.sms_input_dialog.toggle();
               that.$refs.sms_input_dialog.$data.params.smsSendNo = "";
@@ -76,7 +74,6 @@
     mounted: function () {
       var that = this;
       $('#subBtn').bind('keyup', function (event) {
-        console.log(event.keyCode);
         if (event.keyCode === 13) {
           that.$store.commit("read_content", "您已提交");
           that.submit();
