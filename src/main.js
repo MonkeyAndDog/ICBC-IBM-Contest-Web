@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -27,7 +25,7 @@ Vue.http.options.crossOrigin = true;
 
 const store = new Vuex.Store({
   state: {
-    contentFontSize: 1,
+    contentFontSize: 3,
     audio: null,
     is_reading: false
   },
@@ -68,7 +66,7 @@ const store = new Vuex.Store({
             alert('timeout')
           }
         });
-        setTimeout(function() {
+        setTimeout(function () {
           state.is_reading = false;
         }, 1000)
       }
@@ -91,5 +89,6 @@ new Vue({
     modelFontSize: function () {
       return this.$store.getters.fontSize;
     }
-  }
+  },
+
 });

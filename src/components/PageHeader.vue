@@ -39,18 +39,18 @@
     name: "PageHeader",
     data: function () {
       return {
-        accessibilityModel: '无障碍模式',
-        isAccessibilityModel: false
+        accessibilityModel: '一般模式',
+        isAccessibilityModel: true
       }
     },
     methods: {
       changeState: function () {
         if (this.isAccessibilityModel) {
-          this.$store.commit('changeModel', 1);
-          this.accessibilityModel = '一般模式'
-        } else {
           this.$store.commit('changeModel', 3);
           this.accessibilityModel = '无障碍模式'
+        } else {
+          this.$store.commit('changeModel', 1);
+          this.accessibilityModel = '一般模式'
         }
         this.isAccessibilityModel = !this.isAccessibilityModel;
       }
