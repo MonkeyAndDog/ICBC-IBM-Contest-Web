@@ -16,6 +16,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import "./assets/js/baidu_tts_cors"
 
+import {btts} from "./assets/js/baidu_tts_cors.js"
+
 Vue.use(Vuex);
 Vue.use(VueResource);
 Vue.use(ElementUI);
@@ -26,15 +28,48 @@ Vue.http.options.crossOrigin = true;
 const store = new Vuex.Store({
   state: {
     contentFontSize: 1,
-    audio: null
+    audio: null,
+    is_reading: false
   },
   mutations: {
     changeModel: function (state, size) {
       state.contentFontSize = size;
       screenfull.toggle();
     },
-    read_content:function (content) {
-      
+    read_content: function (state, content) {
+      if (!state.is_reading) {
+        state.is_reading = true;
+        let text = content;
+        // 调用语音合成接口
+        // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
+        this.audio = btts({
+          tex: text,
+          tok: '24.89076f69acd9fa9416eb3f5147484617.2592000.1545626449.282335-14926821',
+          spd: 5,
+          pit: 5,
+          vol: 15,
+          per: 4
+        }, {
+          volume: 0.3,
+          autoDestory: true,
+          timeout: 10000,
+          hidden: false,
+          onInit: function (htmlAudioElement) {
+          },
+          onSuccess: function (htmlAudioElement) {
+            this.audio = htmlAudioElement;
+            this.audio.autoplay = true;
+            this.audio.controls = false;
+          },
+          onError: function (text) {
+            alert(text)
+          },
+          onTimeout: function () {
+            alert('timeout')
+          }
+        });
+        state.is_reading = false;
+      }
     }
   },
   getters: {

@@ -5,7 +5,7 @@
       <embed height="100" width="100" src="../assets/audio/welcome.mp3"/>
     </audio>
     <el-card>
-      <router-link to="/library"><img src="../assets/logo.png" width="100%" height="100%"></router-link>
+      <router-link to="/library"><img src="../assets/start.jpg" width="100%" height="100%"></router-link>
     </el-card>
   </div>
 </template>

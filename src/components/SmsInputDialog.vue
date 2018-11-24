@@ -20,7 +20,6 @@
 </template>
 
 <script>
-  import {btts} from "../assets/js/baidu_tts_cors.js"
 
   export default {
     name: "SmsInputDialog",
@@ -39,6 +38,7 @@
     methods: {
       set_corpSerNoOriginal: function (corpSerNoOriginal) {
         this.params.corpSerNoOriginal = corpSerNoOriginal;
+        setTimeout(this.get_focus, 3000);
       },
       toggle: function () {
         $('#sms_input_dialog').modal('toggle');
@@ -51,55 +51,28 @@
           data: this.$data.params,
           success: function (result) {
             if (result.status === "0") {
-              that.read_input("账户开户成功")
+              that.$store.commit("read_content", "账户开户成功，您的工行联名卡号为：" + result.data);
               that.toggle()
             } else {
-              that.read_input("账户开户失败")
+              that.$store.commit("read_content", "账户开户失败");
             }
           }
         })
       },
-      read_input: function (content) {
-        if (this.reading) {
-          return;
-        }
-        this.reading = true;
-        let text = content;
-        // 调用语音合成接口
-        // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
-        this.audio = btts({
-          tex: text,
-          tok: '24.9270aa0ff0f9747e26851feafda13f73.2592000.1545602364.282335-14926821',
-          spd: 5,
-          pit: 5,
-          vol: 15,
-          per: 4
-        }, {
-          volume: 0.3,
-          autoDestory: true,
-          timeout: 10000,
-          hidden: false,
-          onInit: function (htmlAudioElement) {
-
-          },
-          onSuccess: function (htmlAudioElement) {
-            this.audio = htmlAudioElement;
-            this.audio.autoplay = true;
-            this.audio.controls = false;
-          },
-          onError: function (text) {
-            alert(text)
-          },
-          onTimeout: function () {
-            alert('timeout')
-          }
-        });
-        this.reading = false;
+      get_focus: function () {
+        $('#sms_send_no').focus();
       }
     },
-    get_focus: function () {
-      $('#sms_send_no').focus();
-    }
+    mounted: function () {
+      var that = this;
+      $('#sms_send_no').bind('keyup', function (event) {
+        console.log(event.keyCode);
+        if (event.keyCode === 13) {
+          that.$store.commit("read_content", "您已提交");
+          that.submit();
+        }
+      })
+    },
 
   }
 </script>

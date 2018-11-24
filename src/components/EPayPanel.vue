@@ -1,8 +1,9 @@
 <template>
   <div style="padding: 10px;">
     <SmsInputDialog ref="sms_input_dialog" :parent_smsSendNo="this.params.corpSerno"></SmsInputDialog>
-    <el-input class="input_space" v-model="params.corpNo" placeholder="合作方机构编号" @focus="read_input('合作方机构编号输入')"
-              autofocus></el-input>
+    <el-input id="first_input" class="input_space" v-model="params.corpNo" placeholder="合作方机构编号"
+              @focus="read_input('合作方机构编号输入')"
+    ></el-input>
     <el-input class="input_space" v-model="params.corpSerno" placeholder="合作方交易单号"
               @focus="read_input('合作方交易单号输入')"></el-input>
     <el-input class="input_space" v-model="params.outServiceCode" placeholder="外部服务代码"
@@ -10,25 +11,22 @@
     <el-input class="input_space" v-model="params.corpCisNo" placeholder="合作方客户号"
               @focus="read_input('合作方客户号输入')"></el-input>
     <el-input class="input_space" v-model="params.corpMediumId" placeholder="合作方介质号，如微信号"
-              @focus="read_input('合作方介质号，如微信号输入')"></el-input>
+              @focus="read_input('合作方介质号')"></el-input>
     <el-input class="input_space" v-model="params.bindMedium" placeholder="绑定的I类卡号" @focus="read_input('绑定的I类卡号输入')"
     ></el-input>
     <el-input class="input_space" v-model="params.certType" placeholder="证件类型" @focus="read_input('证件类型输入')"></el-input>
     <el-input class="input_space" v-model="params.certNo" placeholder="证件号码" @focus="read_input('证件号码输入')"></el-input>
     <el-input class="input_space" v-model="params.custName" placeholder="户名" @focus="read_input('户名输入')"></el-input>
     <el-input class="input_space" v-model="params.mobileNo" placeholder="手机号" @focus="read_input('手机号输入')"></el-input>
-    <el-input class="input_space" v-model="params.notifyAddr" placeholder="通知地址，合作方服务地址"
-              @focus="read_input('通知地址，合作方服务地址输入')"></el-input>
-    <el-button @click="submit">提交</el-button>
+    <el-input @focus="read_input('确认提交')" id="subBtn"></el-input>
+    <el-button @click="submit" @focus="read_input('确认提交')">提交</el-button>
   </div>
 </template>
 
 <script>
-  import {btts} from "../assets/js/baidu_tts_cors.js"
   import SmsInputDialog from "./SmsInputDialog";
 
   export default {
-
     name: "EPayPanel",
     components: {SmsInputDialog},
     data: function () {
@@ -60,85 +58,34 @@
           success: function (result) {
             if (result.status === "0") {
               console.log(result);
-              that.read_input("账户受理成功，您的短信编号是：" + result.data + "，请输入您的短信验证码")
+              that.$store.commit("read_content", "账户受理成功，您的短信编号是：" + result.data + "，请输入您的短信验证码， 按回车提交")
               that.$refs.sms_input_dialog.toggle();
               that.$refs.sms_input_dialog.$data.params.smsSendNo = "";
               that.$refs.sms_input_dialog.set_corpSerNoOriginal(that.params.corpSerno);
+              that.$refs.sms_input_dialog.get_focus();
             } else {
-              that.read_input("账户受理失败")
+              that.$store.commit("read_content", "账户受理失败");
             }
           }
         })
       },
       read_input: function (content) {
-        if (this.reading) {
-          return;
-        }
-        this.reading = true;
-        let text = content;
-        // 调用语音合成接口
-        // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
-        this.audio = btts({
-          tex: text,
-          tok: '24.9270aa0ff0f9747e26851feafda13f73.2592000.1545602364.282335-14926821',
-          spd: 5,
-          pit: 5,
-          vol: 15,
-          per: 4
-        }, {
-          volume: 0.3,
-          autoDestory: true,
-          timeout: 10000,
-          hidden: false,
-          onInit: function (htmlAudioElement) {
-
-          },
-          onSuccess: function (htmlAudioElement) {
-            this.audio = htmlAudioElement;
-            this.audio.autoplay = true;
-            this.audio.controls = false;
-          },
-          onError: function (text) {
-            alert(text)
-          },
-          onTimeout: function () {
-            alert('timeout')
-          }
-        });
-        this.reading = false;
+        this.$store.commit("read_content", content)
       }
     },
     mounted: function () {
-      let text = " ";
-      // 调用语音合成接口
-      // 参数含义请参考 https://ai.baidu.com/docs#/TTS-API/41ac79a6
-      this.audio = btts({
-        tex: text,
-        tok: '24.9270aa0ff0f9747e26851feafda13f73.2592000.1545602364.282335-14926821',
-        spd: 5,
-        pit: 5,
-        vol: 15,
-        per: 4
-      }, {
-        volume: 0.3,
-        autoDestory: true,
-        timeout: 10000,
-        hidden: false,
-        onInit: function (htmlAudioElement) {
-
-        },
-        onSuccess: function (htmlAudioElement) {
-          this.audio = htmlAudioElement;
-          this.audio.autoplay = true;
-          this.audio.controls = false;
-        },
-        onError: function (text) {
-          alert(text)
-        },
-        onTimeout: function () {
-          alert('timeout')
+      var that = this;
+      $('#subBtn').bind('keyup', function (event) {
+        console.log(event.keyCode);
+        if (event.keyCode === 13) {
+          that.$store.commit("read_content", "您已提交");
+          that.submit();
         }
       });
+      this.$store.commit("read_content", "您选择了线上账户服务，按回车开始录入信息");
+      setTimeout(function () {
+        $('#first_input').focus();
+      }, 5000)
     }
   }
 </script>

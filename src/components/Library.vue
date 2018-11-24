@@ -5,9 +5,9 @@
         <router-link to="/epay">
           <el-card class="section_card">
             <el-header>
-              EPay
+              线上账户服务
             </el-header>
-            <img src="../assets/logo.png" style="width: 100%;">
+            <img src="../assets/epay.jpg" style="width: 100%;">
           </el-card>
         </router-link>
       </el-col>
@@ -15,17 +15,13 @@
         <router-link to="/transfer">
           <el-card>
             <el-header>
-              转账
+              工银e缴费
             </el-header>
-            <img src="../assets/logo.png" style="width: 100%;">
+            <img src="../assets/icbcepay.jpg" style="width: 100%;">
           </el-card>
         </router-link>
       </el-col>
     </el-row>
-    <audio autoplay height="100" width="100">
-      <source src="../assets/audio/section.mp3" type="audio/mp3"/>
-      <embed height="100" width="100" src="../assets/audio/welcome.mp3"/>
-    </audio>
   </div>
 
 </template>
@@ -34,6 +30,9 @@
 
   export default {
     name: "Library",
+    mounted: function () {
+      this.$store.commit("read_content", "您可使用的功能有线上账户服务，工银e缴费")
+    }
   }
 </script>
 
