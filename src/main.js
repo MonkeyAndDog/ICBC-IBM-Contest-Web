@@ -12,21 +12,29 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap'
 import Vuex from 'vuex'
 import './assets/js/screenfull';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import "./assets/js/baidu_tts_cors"
 
 Vue.use(Vuex);
 Vue.use(VueResource);
+Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.http.options.emulateJSON = true;
 Vue.http.options.crossOrigin = true;
 
 const store = new Vuex.Store({
   state: {
-    contentFontSize: 1
+    contentFontSize: 1,
+    audio: null
   },
   mutations: {
     changeModel: function (state, size) {
       state.contentFontSize = size;
       screenfull.toggle();
+    },
+    read_content:function (content) {
+      
     }
   },
   getters: {
@@ -41,7 +49,7 @@ new Vue({
   components: {App},
   template: '<App v-bind:model-font-size="modelFontSize" />',
   router: router,
-  store:store,
+  store: store,
   computed: {
     modelFontSize: function () {
       return this.$store.getters.fontSize;

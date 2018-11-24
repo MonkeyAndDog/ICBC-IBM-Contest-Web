@@ -3,13 +3,20 @@ import Router from 'vue-router'
 import Home from '../components/Home'
 import Library from '../components/Library'
 import About from '../components/About'
+import Starter from '../components/Starter'
+import EPayPanel from '../components/EPayPanel'
+import TransferPanel from '../components/TransferPanel'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
       path: '/',
+      component: Starter
+    },
+    {
+      path: '/home',
       component: Home
     },
     {
@@ -17,12 +24,12 @@ export default new Router({
       component: Library
     },
     {
-      path: '/library/:part',
-      component: Library
+      path: '/epay',
+      component: EPayPanel
     },
     {
-      path: '/library/:part/:section',
-      component: Library
+      path: '/transfer',
+      component: TransferPanel
     },
     {
       path: '/about',
